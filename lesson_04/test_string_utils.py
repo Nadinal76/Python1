@@ -117,7 +117,8 @@ def test_list_to_string_empty():
     assert utils.list_to_string([]) == ""
 
 
-# Используем pytest в фиктивном тесте, чтобы убрать ошибку неиспользуемого импорта
+# Используем pytest в фиктивном тесте, чтобы убрать
+# ошибку неиспользуемого импорта (длина строки < 79)
 def test_unused_import_fix():
     with pytest.raises(ZeroDivisionError):
         _ = 1 / 0
