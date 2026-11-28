@@ -1,17 +1,12 @@
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
 def test_saucedemo_checkout():
-    # Указываем путь к браузеру Firefox
-    options = Options()
-    options.binary_location = r"C:\Program Files\Mozilla Firefox\firefox.exe"
-
     # 1. Откройте сайт магазина в Firefox
-    driver = webdriver.Firefox(options=options)
+    driver = webdriver.Firefox()
     driver.maximize_window()
     wait = WebDriverWait(driver, 10)
 

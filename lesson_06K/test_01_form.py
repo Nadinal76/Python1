@@ -1,33 +1,12 @@
-import pytest
-from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.edge.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-@pytest.fixture
-def driver():
-    options = Options()
-    options.page_load_strategy = "eager"
-    options.add_argument(
-        "--dns-over-https-templates=https://dns.google"
-    )
-    driver = webdriver.Edge(options=options)
-    driver.maximize_window()
-    yield driver
-    driver.quit()
-
-
 def test_form_submission(driver):
-    parts = [
-        "https:",
-        "",
-        "bonigarcia.dev",
-        "selenium-webdriver-java",
-        "data-types.html",
-    ]
-    driver.get("/".join(parts))
+    driver.get(
+        "https://bonigarcia.dev/selenium-webdriver-java/data-types.html"
+    )
 
     wait = WebDriverWait(driver, 20)
     first_name = wait.until(
@@ -65,7 +44,7 @@ def test_form_submission(driver):
     submit_btn = wait.until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, "button[type='submit']"))
     )
-    driver.execute_script("arguments[0].click();", submit_btn)
+    submit_btn.click()
 
     zip_code = wait.until(
         EC.presence_of_element_located((By.ID, "zip-code"))
