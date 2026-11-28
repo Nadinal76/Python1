@@ -1,25 +1,25 @@
-from selenium.webdriver.common.by import By
+from playwright.sync_api import Page
 
 
 class LoginPage:
-    def __init__(self, driver):
-        self.driver = driver
-        self.url = "https://www.saucedemo.com/"
-        self.username_input = (By.ID, "user-name")
-        self.password_input = (By.ID, "password")
-        self.login_button = (By.ID, "login-button")
+    def __init__(self, page: Page):
+        self.page = page
+        self.url = "https://saucedemo.com"
+        self.username_input = page.locator("#user-name")
+        self.password_input = page.locator("#password")
+        self.login_button = page.locator("#login-button")
 
     def open(self):
-        self.driver.get(self.url)
+        self.page.goto(self.url)
 
     def enter_username(self, username):
-        self.driver.find_element(*self.username_input).send_keys(username)
+        self.username_input.fill(username)
 
     def enter_password(self, password):
-        self.driver.find_element(*self.password_input).send_keys(password)
+        self.password_input.fill(password)
 
     def click_login(self):
-        self.driver.find_element(*self.login_button).click()
+        self.login_button.click()
 
     def login(self, username, password):
         self.enter_username(username)

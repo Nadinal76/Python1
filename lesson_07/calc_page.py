@@ -1,34 +1,27 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from playwright.sync_api import Page, expect
 
 
 class CalcPage:
-    def __init__(self, driver):
-        self.driver = driver
+    def __init__(self, page: Page):
+        self.page = page
         self.url = (
             "https://bonigarcia.dev/selenium-webdriver-java/"
             "slow-calculator.html"
         )
-        self.delay_input = (By.CSS_SELECTOR, "#delay")
-        self.screen = (By.CSS_SELECTOR, ".screen")
+        self.delay_input = page.locator("#delay")
+        self.screen = page.locator(".screen")
 
     def open(self):
-        self.driver.get(self.url)
+        self.page.goto(self.url)
 
     def set_delay(self, delay_value):
-        field = self.driver.find_element(*self.delay_input)
-        field.clear()
-        field.send_keys(str(delay_value))
+        self.delay_input.fill(str(delay_value))
 
     def click_button(self, button_text):
-        locator = (By.XPATH, f"//span[text()='{button_text}']")
-        self.driver.find_element(*locator).click()
+        self.page.locator(f"//span[text()='{button_text}']").click()
 
-    def get_result(self, expected_result, timeout=50):
-        WebDriverWait(self.driver, timeout).until(
-            EC.text_to_be_present_in_element(
-                self.screen, str(expected_result)
-            )
+    def get_result(self, expected_result, timeout=50000):
+        expect(self.screen).to_have_text(
+            str(expected_result), timeout=timeout
         )
-        return self.driver.find_element(*self.screen).text
+        return self.screen.text_content()
