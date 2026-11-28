@@ -1,0 +1,5 @@
+{
+  "test_string_utils.py::test_capitalize_positive": true,
+  "test_string_utils.py::test_capitalize_already_capitalized": true,
+  "test_string_utils.py::test_capitalize_numbers": true
+}
