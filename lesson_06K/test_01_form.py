@@ -1,3 +1,4 @@
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -44,6 +45,7 @@ def test_form_submission(driver):
     submit_btn = wait.until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, "button[type='submit']"))
     )
+    ActionChains(driver).scroll_to_element(submit_btn).perform()
     submit_btn.click()
 
     zip_code = wait.until(
